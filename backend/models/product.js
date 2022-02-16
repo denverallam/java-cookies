@@ -27,20 +27,18 @@ const productSchema = new mongoose.Schema({
         required: true,
         default: new Date(Date.now())
     },
-    created_by:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: [true, "Please enter user"],
-        ref: "User"
+    created_by: {
+        type: String,
+        required: [true, "Please enter user"]
     },
     updated_at: {
         type: Date,
         required: true,
         default: new Date(Date.now())
     },
-    updated_by:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: [true, "Please enter user"],
-        ref: "User"
+    updated_by: {
+        type: String,
+        required: [true, "Please enter user"]
     }
 })
 

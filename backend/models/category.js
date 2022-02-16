@@ -9,9 +9,8 @@ const categorySchema = new mongoose.Schema({
         unique: true
     },
     created_by:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: [true, "Please enter user"],
-        ref: "User"
+        type: String,
+        required: [true, "Please enter user"]
     }
 })
 

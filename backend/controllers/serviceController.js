@@ -97,7 +97,7 @@ exports.deleteService = catchAsyncErrors(async (req, res, next) => {
         date: Date.now()
     })
 
-    await Service.remove()
+    await service.remove()
 
     res.status(200).json({
         success: true,

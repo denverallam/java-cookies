@@ -35,7 +35,7 @@ exports.getSingleCategory = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.createCategory = catchAsyncErrors(async (req, res, next) => {
-    const category = await Category.create({...req.body, created_by: req.username})
+    const category = await Category.create({...req.body, created_by: req.user.username})
 
     await Audit.create({
         name: "New category created",

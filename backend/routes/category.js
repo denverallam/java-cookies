@@ -20,7 +20,7 @@ const category = require('../controllers/categoryController')
 router.route('/categories').get(category.getAllCategories)
 
 router.route('/admin/categories').get(isAuthenticatedUser, authorizeRoles('Admin', 'Staff'), category.getAllCategories)
-router.route('/admin/Category/:id').get(isAuthenticatedUser, authorizeRoles('Admin', 'Staff'), category.getSingleCategory)
+router.route('/admin/category/:id').get(isAuthenticatedUser, authorizeRoles('Admin', 'Staff'), category.getSingleCategory)
 
 router.route('/new/category').post(isAuthenticatedUser, authorizeRoles('Admin', 'Staff'), category.createCategory)
 router.route('/category/:id').put(isAuthenticatedUser, authorizeRoles('Admin', 'Staff'), category.updateCategory)

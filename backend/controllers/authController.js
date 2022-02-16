@@ -108,7 +108,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     const user = await User.create({ ...req.body, role: userRole })
 
     await Audit.create({
-        name: "New user created",
+        name: "New user createdasdasd",
         description: `${username} created.`,
         created_by: req.user.username,
         date: Date.now()
@@ -182,7 +182,7 @@ exports.updateUser = catchAsyncErrors(async (req, res, next) => {
 
     await Audit.create({
         name: "User updated",
-        description: `${username} updated.`,
+        description: `${user.username} updated.`,
         created_by: req.user.username,
         date: Date.now()
     })
@@ -200,7 +200,7 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
 
     await Audit.create({
         name: "User deleted",
-        description: `${username} deleted.`,
+        description: `${user.username} deleted.`,
         created_by: req.user.username,
         date: Date.now()
     })
