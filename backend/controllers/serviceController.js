@@ -9,12 +9,11 @@ exports.getAllServices = catchAsyncErrors(async (req, res, next) => {
     const serviceCount = await Service.countDocuments()
 
     const apiFeatures = new APIFeatures(Service.find(), req.query)
-        // .search()
+        .search()
         .filter()
-        // .pagination(resPerPage)
+        .pagination(resPerPage)
 
     const services = await apiFeatures.query
-    // const services = await Service.find()
 
     res.status(200).json({
         success: true,

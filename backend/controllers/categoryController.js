@@ -2,19 +2,9 @@ const Category = require('../models/category')
 const Audit = require('../models/audit')
 const ErrorHandler = require('../utils/errorHandler')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
-const APIFeatures = require('../utils/apiFeatures')
 
 exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
-    const resPerPage = 5
-    const categoryCount = await Category.countDocuments()
-
-    const apiFeatures = new APIFeatures(Category.find(), req.query)
-        // .search()
-        .filter()
-        // .pagination(resPerPage)
-
-    const categories = await apiFeatures.query
-    // const categories = await Category.find()
+    const categories = await Category.find()
 
     res.status(200).json({
         success: true,

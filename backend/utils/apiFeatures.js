@@ -4,72 +4,16 @@ class APIFeatures {
         this.queryStr = queryStr
     }
 
-    //announcement
-    searchTitle() {
-        const keyword = this.queryStr.keyword ? {
-            title: {
-                $regex: this.queryStr.keyword,
-                $options: 'i' // i means case insensitive
-            }
-        } : {}
-        this.query = this.query.find({ ...keyword })
-        return this
-    }
-
-    //request
-    searchRequests() {
-        const keyword = this.queryStr.keyword ? {
-            trackingNumber: {
-                $regex: this.queryStr.keyword,
-                $options: 'i' // i means case insensitive
-            }
-        } : {}
-        this.query = this.query.find({ ...keyword })
-        return this
-    }
-
-    //audit
-    searchAudit() {
+    search() {
         const keyword = this.queryStr.name ? {
             name: {
                 $regex: this.queryStr.name,
                 $options: 'i' // i means case insensitive
             }
-        } : this.queryStr.eventInfo ? {
-            eventInfo: {
-                $regex: this.queryStr.eventInfo,
+        } : this.queryStr.category ? {
+            category: {
+                $regex: this.queryStr.category,
                 $options: 'i' // i means case insensitive
-            }
-        } :
-            this.queryStr.user ? {
-                user: {
-                    $regex: this.queryStr.user,
-                    $options: 'i' // i means case insensitive
-                }
-            } : {}
-
-        this.query = this.query.find({ ...keyword })
-        return this
-    }
-
-    //forms
-    searchForms() {
-        const keyword = this.queryStr.keyword ? {
-            formName: {
-                $regex: this.queryStr.keyword,
-                $options: 'i' // i means case insensitive
-            }
-        } : {}
-        this.query = this.query.find({ ...keyword })
-        return this
-    }
-
-    //conversation
-    searchUser() {
-        const keyword = this.queryStr.keyword ? {
-            names: {
-                $regex: this.queryStr.keyword,
-                $options: 'i'
             }
         } : {}
 
@@ -89,6 +33,7 @@ class APIFeatures {
         this.query = this.query.find(queryCopy)
         return this
     }
+    
     pagination(resPerPage) {
         const currentPage = Number(this.queryStr.page) || 1
         const skip = resPerPage * (currentPage - 1)
