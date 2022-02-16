@@ -12,15 +12,17 @@ app.use(express.json())
 app.use(cookieParser())
 
 //Import all routes
-const orders = require('./routes/order')
+const services = require('./routes/service')
 const products = require('./routes/product')
 const auth = require('./routes/auth')
-const cart = require('./routes/cart')
+const audits = require('./routes/audit')
+const categories = require('./routes/category')
 
-app.use('/api/v1', orders)
+app.use('/api/v1', services)
 app.use('/api/v1', products)
 app.use('/api/v1', auth)
-app.use('/api/v1', cart)
+app.use('/api/v1', audits)
+app.use('/api/v1', categories)
 
 /*
 if(process.env.NODE_ENV === 'PRODUCTION'){

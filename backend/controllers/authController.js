@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const Audit = require('../models/audit')
 const ErrorHandler = require('../utils/errorHandler')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const sendToken = require('../utils/jwtToken')
@@ -10,26 +11,17 @@ const jwt = require('jsonwebtoken')
 
 
 exports.login = catchAsyncErrors(async (req, res, next) => {
-    const { email, password } = req.body
+    const { username, password } = req.body
 
-    if (!email || !password) { return next(new ErrorHandler('Please enter your credentials', 400)) }
+    if (!username || !password) { return next(new ErrorHandler('Please enter your credentials', 400)) }
 
-    const userEmail = await User.findOne({ email }).select('+password')
-    const userUsername = await User.findOne({ username: email }).select('+password')
+    const user = await User.findOne({ username }).select('+password')
 
-    if (!userEmail && !userUsername) { return next(new ErrorHandler('Invalid Credentials', 401)) }
+    if (!user) { return next(new ErrorHandler('Invalid Credentials', 401)) }
 
-    if (userEmail) {
-        const isPasswordMatched = await userEmail.comparePassword(password)
-        if (!isPasswordMatched) { return next(new ErrorHandler('Invalid Credentials', 401)) }
-        sendToken(userEmail, 200, res)
-    }
-
-    if (userUsername) {
-        const isPasswordMatched = await userUsername.comparePassword(password)
-        if (!isPasswordMatched) { return next(new ErrorHandler('Invalid Credentials', 401)) }
-        sendToken(userUsername, 200, res)
-    }
+    const isPasswordMatched = await user.comparePassword(password)
+    if (!isPasswordMatched) { return next(new ErrorHandler('Invalid Credentials', 401)) }
+    sendToken(user, 200, res)
 })
 
 exports.logout = catchAsyncErrors(async (req, res, next) => {
@@ -60,7 +52,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
         await sendEmail({
             email: user.email,
-            subject: 'FioreX Password Recovery',
+            subject: 'Java Cookies Password Recovery',
             message: `<h1>Reset link: ${link}</h1>`
         })
 
@@ -68,7 +60,6 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
             success: true,
             message: `Email sent.\nKindly check your inbox or spam.`
         })
-
     } catch (error) {
         user.resetPasswordToken = undefined
         user.resetPasswordExpire = undefined
@@ -88,7 +79,6 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     })
     if (!user) { return next(new ErrorHandler('Password reset link is invalid or has expired')) }
 
-
     if (password !== confirmPassword) { return next(new ErrorHandler('Password does not match')) }
 
     user.password = password
@@ -103,85 +93,26 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
-exports.registerCustomer = catchAsyncErrors(async (req, res, next) => {
-    const { email, username, password, confirmPassword } = req.body
-
-    const userEmail = await User.findOne({ email })
-    const userUsername = await User.findOne({ username })
-
-    const role = "Customer"
-    const cart = []
-
-    if (userEmail || userUsername) { return next(new ErrorHandler('Email account or username already exists', 404)) }
-
-    if (password !== confirmPassword) { return next(new ErrorHandler('Password does not match')) }
-
-    const registerToken = jwt.sign({ ...req.body, role, cart }, process.env.ACCOUNT_TOKEN, { expiresIn: process.env.REGISTER_EXPIRES })
-
-    // create reset password url
-    const link = `${req.protocol}://${process.env.HOST}/verify/account/${registerToken}`
-
-    try {
-        // const message = await verifyEmail({ link })
-
-        await sendEmail({
-            email: email,
-            subject: 'FioreX Account Verification',
-            message: `<h1>Reset link: ${link}</h1>`
-        })
-
-        res.status(200).json({
-            success: true,
-            message: `Account verification link is now sent \n please check your inbox or spam`
-        })
-
-    } catch (error) {
-        return next(new ErrorHandler(error.message, 500))
-    }
-})
-
-exports.verifyCustomer = catchAsyncErrors(async (req, res, next) => {
-    const token = req.params.token
-
-    if (token) {
-        jwt.verify(token, process.env.ACCOUNT_TOKEN, function (err, customer) {
-            if (err) { return next(new ErrorHandler('Token is invalid or expired')) }
-
-            const { email } = customer
-
-            User.findOne({ email }).exec((err, existingUser) => {
-                if (existingUser) { return next(new ErrorHandler('Email already exists')) }
-                const user = User.create(customer).then(() =>
-                    res.status(201).json({
-                        success: true,
-                        message: "Congratulations! Your FioreX account has been successfully registered. You may now log in."
-                    })
-                )
-            })
-        })
-    } else {
-        return next(new ErrorHandler('Token is invalid or expired'))
-    }
-})
-
-exports.registerStaff = catchAsyncErrors(async (req, res, next) => {
+exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     const { email, username, password, role, confirmPassword } = req.body
 
     if (password !== confirmPassword) { return next(new ErrorHandler('Password does not match')) }
 
-    let userRole = role
-    const cart = []
-
-    if (!role) {
-        userRole = "Staff"
-    }
+    let userRole = role ? role : "Staff"
 
     const userEmail = await User.findOne({ email })
     const userUsername = await User.findOne({ username })
 
     if (userEmail || userUsername) { return next(new ErrorHandler('Email account or username already exists', 404)) }
 
-    const user = await User.create({ ...req.body, role: userRole, cart })
+    const user = await User.create({ ...req.body, role: userRole })
+
+    await Audit.create({
+        name: "New user created",
+        description: `${username} created.`,
+        created_by: req.user.username,
+        date: Date.now()
+    })
 
     res.status(201).json({
         success: true,
@@ -208,19 +139,6 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 exports.getMyProfile = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user.id)
 
-    res.status(200).json({
-        success: true,
-        user
-    })
-})
-
-exports.updateMyProfile = catchAsyncErrors(async (req, res, next) => {
-    //const newUserData = { role: req.body.role }
-    const user = await User.findByIdAndUpdate(req.user.id, req.body, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    })
     res.status(200).json({
         success: true,
         user
@@ -262,6 +180,13 @@ exports.updateUser = catchAsyncErrors(async (req, res, next) => {
 
     if (!user) { return next(new ErrorHandler(`User not found with this id:(${req.params.id})`)) }
 
+    await Audit.create({
+        name: "User updated",
+        description: `${username} updated.`,
+        created_by: req.user.username,
+        date: Date.now()
+    })
+
     res.status(200).json({
         success: true,
         user
@@ -272,6 +197,13 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.params.id)
 
     if (!user) { return next(new ErrorHandler(`User not found with this id:(${req.params.id})`)) }
+
+    await Audit.create({
+        name: "User deleted",
+        description: `${username} deleted.`,
+        created_by: req.user.username,
+        date: Date.now()
+    })
 
     await user.remove()
 

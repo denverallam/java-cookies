@@ -1,24 +1,11 @@
 const Product = require('../models/product')
+const Audit = require('../models/audit')
 const ErrorHandler = require('../utils/errorHandler')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const APIFeatures = require('../utils/apiFeatures')
 
-
-// create new product => api/v1/admin/product/new
-exports.createProduct = catchAsyncErrors(async (req, res, next) => {
-    // req.body.user = req.user.id
-    const product = await Product.create(req.body)
-
-    res.status(201).json({
-        success: true,
-        message: "New product added!",
-        product
-    })
-})
-
-// Get all products => /api/v1/products?keyword=menudo
 exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
-    const resPerPage = 3
+    const resPerPage = 5
     const productCount = await Product.countDocuments()
 
     const apiFeatures = new APIFeatures(Product.find(), req.query)
@@ -36,7 +23,6 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
-// Get single products => /api/v1/product/:id
 exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.findById(req.params.id)
 
@@ -48,17 +34,50 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
-// Update product => /api/v1/admin/product/:id
+exports.createProduct = catchAsyncErrors(async (req, res, next) => {
+    const product = await Product.create({
+        ...req.body, 
+        created_at: new Date(Date.now()),
+        updated_at: new Date(Date.now()),
+        created_by: req.user.username,
+        updated_by: req.user.username
+    })
+
+    await Audit.create({
+        name: "New product created",
+        description: `${req.body.name} created.`,
+        created_by: req.user.username,
+        date: Date.now()
+    })
+
+    res.status(201).json({
+        success: true,
+        message: "New product added!",
+        product
+    })
+})
+
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     let product = await Product.findById(req.params.id)
 
     if (!product) { return next(new ErrorHandler('Product not found', 404)) }
 
-    product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    product = await Product.findByIdAndUpdate(req.params.id, {
+        ...req.body, 
+        updated_at: new Date(Date.now()),
+        updated_by: req.user.username
+    }, {
         new: true,
         runValidators: true,
         useFindAndModify: false
     });
+
+    await Audit.create({
+        name: "Product updated",
+        description: `${product.name} updated.`,
+        created_by: req.user.username,
+        date: Date.now()
+    })
 
     res.status(200).json({
         success: true, 
@@ -66,12 +85,17 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
-// delete product => /api/v1/admin/product/:id
 exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
-
     const product = await Product.findById(req.params.id)
 
     if (!product) { return next(new ErrorHandler('Product not found', 404)) }
+
+    await Audit.create({
+        name: "Product deleted",
+        description: `${product.name} deleted.`,
+        created_by: req.user.username,
+        date: Date.now()
+    })
 
     await product.remove()
 
