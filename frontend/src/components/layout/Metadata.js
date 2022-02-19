@@ -5,7 +5,7 @@ const Metadata = ({ title }) => {
     return (
         <Helmet>
             <title>
-                {`${title} | FioreX`}
+                {`${title} | Java Cookies`}
             </title>
         </Helmet>
     )
