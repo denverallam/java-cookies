@@ -23,23 +23,28 @@ const Header = () => {
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item><LogoutButton /></NavDropdown.Item>
                                 </NavDropdown>
-                                <NavDropdown title="Admin" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="/admin/new/user">Register user (Admin)</NavDropdown.Item>
-                                    <NavDropdown.Item href="/admin/users">All users (Admin)</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="/admin/product/new">Create Product</NavDropdown.Item>
-                                    <NavDropdown.Item href="/admin/products">Get All Products</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="/admin/service/new">Create Service</NavDropdown.Item>
-                                    <NavDropdown.Item href="/admin/services">Get All Services</NavDropdown.Item>
-                                </NavDropdown>
-                                <NavDropdown title="Staff" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="/admin/product/new">Create Product</NavDropdown.Item>
-                                    <NavDropdown.Item href="/admin/products">Get All Products</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="/admin/service/new">Create Service</NavDropdown.Item>
-                                    <NavDropdown.Item href="/admin/services">Get All Services</NavDropdown.Item>
-                                </NavDropdown>
+                                {user.role === 'Admin' ?
+                                    <>
+                                        <NavDropdown title="Admin" id="basic-nav-dropdown">
+                                            <NavDropdown.Item href="/admin/new/user">Register user (Admin)</NavDropdown.Item>
+                                            <NavDropdown.Item href="/admin/users">All users (Admin)</NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item href="/admin/product/new">Create Product</NavDropdown.Item>
+                                            <NavDropdown.Item href="/admin/products">Get All Products</NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item href="/admin/service/new">Create Service</NavDropdown.Item>
+                                            <NavDropdown.Item href="/admin/services">Get All Services</NavDropdown.Item>
+                                        </NavDropdown>
+                                    </> :
+                                    <>
+                                        <NavDropdown title="Staff" id="basic-nav-dropdown">
+                                            <NavDropdown.Item href="/admin/product/new">Create Product</NavDropdown.Item>
+                                            <NavDropdown.Item href="/admin/products">Get All Products</NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item href="/admin/service/new">Create Service</NavDropdown.Item>
+                                            <NavDropdown.Item href="/admin/services">Get All Services</NavDropdown.Item>
+                                        </NavDropdown>
+                                    </>}
                             </> : <>
                                 <Nav.Link href='/login'>Login</Nav.Link>
                             </>}
