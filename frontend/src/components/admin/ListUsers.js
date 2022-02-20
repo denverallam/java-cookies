@@ -3,7 +3,7 @@ import { useAlert } from 'react-alert'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllUsers, deleteUser, clearErrors } from '../../actions/userActions'
-import { DELETE_USER_RESET } from '../../constants/userConstants'
+import { userConstants } from '../../constants'
 
 const ListUsers = () => {
     const dispatch = useDispatch()
@@ -31,7 +31,7 @@ const ListUsers = () => {
         if(isDeleted) {
             alert.success('User has been deleted')
             
-            dispatch({type:DELETE_USER_RESET})
+            dispatch({type: userConstants.DELETE_USER_RESET})
         }
     }, [dispatch, deleteError, alert, isDeleted, error])
 

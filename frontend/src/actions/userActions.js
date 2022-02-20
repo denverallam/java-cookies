@@ -1,28 +1,28 @@
 import axios from 'axios'
-import * as user from '../constants/userConstants'
+import { userConstants } from '../constants'
+
+const config = {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+}
 
 export const login = (user) => async (dispatch) => {
     try {
         dispatch({
-            type: user.LOGIN_REQUEST
+            type: userConstants.LOGIN_REQUEST
         })
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
 
         const { data } = await axios.post('/api/v1/login', user, config)
 
         dispatch({
-            type: user.LOGIN_SUCCESS,
+            type: userConstants.LOGIN_SUCCESS,
             payload: data.user
         })
 
     } catch (error) {
         dispatch({
-            type: user.LOGIN_FAIL,
+            type: userConstants.LOGIN_FAIL,
             payload: error.response.data.message
         })
     }
@@ -31,18 +31,18 @@ export const login = (user) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
     try {
         dispatch({
-            type: user.LOGOUT_REQUEST
+            type: userConstants.LOGOUT_REQUEST
         })
 
         await axios.get('/api/v1/logout')
 
         dispatch({
-            type: user.LOGOUT_SUCCESS
+            type: userConstants.LOGOUT_SUCCESS
         })
 
     } catch (error) {
         dispatch({
-            type: user.LOGOUT_FAIL,
+            type: userConstants.LOGOUT_FAIL,
             payload: error.response.data.message
         })
     }
@@ -51,19 +51,19 @@ export const logout = () => async (dispatch) => {
 export const loadUser = () => async (dispatch) => {
     try {
         dispatch({
-            type: user.LOAD_USER_REQUEST
+            type: userConstants.LOAD_USER_REQUEST
         })
 
         const { data } = await axios.get('/api/v1/me/profile')
 
         dispatch({
-            type: user.LOAD_USER_SUCCESS,
+            type: userConstants.LOAD_USER_SUCCESS,
             payload: data.user
         })
 
     } catch (error) {
         dispatch({
-            type: user.LOAD_USER_FAIL,
+            type: userConstants.LOAD_USER_FAIL,
             payload: error.response.data.message
         })
     }
@@ -72,19 +72,19 @@ export const loadUser = () => async (dispatch) => {
 export const getAllUsers = () => async (dispatch) => {
     try {
         dispatch({
-            type: user.ALL_USERS_REQUEST
+            type: userConstants.ALL_USERS_REQUEST
         })
 
         const { data } = await axios.get('/api/v1/users/all')
 
         dispatch({
-            type: user.ALL_USERS_SUCCESS,
+            type: userConstants.ALL_USERS_SUCCESS,
             payload: data
         })
 
     } catch (error) {
         dispatch({
-            type: user.ALL_USERS_FAIL,
+            type: userConstants.ALL_USERS_FAIL,
             payload: error.response.data.message
         })
     }
@@ -93,19 +93,19 @@ export const getAllUsers = () => async (dispatch) => {
 export const getUser = (id) => async (dispatch) => {
     try {
         dispatch({
-            type: user.USER_DETAILS_REQUEST
+            type: userConstants.USER_DETAILS_REQUEST
         })
 
         const { data } = await axios.get(`/api/v1/user/${id}`)
 
         dispatch({
-            type: user.USER_DETAILS_SUCCESS,
+            type: userConstants.USER_DETAILS_SUCCESS,
             payload: data
         })
 
     } catch (error) {
         dispatch({
-            type: user.USER_DETAILS_FAIL,
+            type: userConstants.USER_DETAILS_FAIL,
             payload: error.response.data.message
         })
     }
@@ -114,25 +114,19 @@ export const getUser = (id) => async (dispatch) => {
 export const updateUser = (id, user) => async (dispatch) => {
     try {
         dispatch({
-            type: user.UPDATE_USER_REQUEST
+            type: userConstants.UPDATE_USER_REQUEST
         })
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
 
         const { data } = await axios.put(`/api/v1/user/update/${id}`, user, config)
 
         dispatch({
-            type: user.UPDATE_USER_SUCCESS,
+            type: userConstants.UPDATE_USER_SUCCESS,
             payload: data.success
         })
 
     } catch (error) {
         dispatch({
-            type: user.UPDATE_USER_FAIL,
+            type: userConstants.UPDATE_USER_FAIL,
             payload: error.response.data.message
         })
     }
@@ -141,19 +135,19 @@ export const updateUser = (id, user) => async (dispatch) => {
 export const deleteUser = (id) => async (dispatch) => {
     try {
         dispatch({
-            type: user.DELETE_USER_REQUEST
+            type: userConstants.DELETE_USER_REQUEST
         })
 
         const { data } = await axios.delete(`/api/v1/user/delete/${id}`)
 
         dispatch({
-            type: user.DELETE_USER_SUCCESS,
+            type: userConstants.DELETE_USER_SUCCESS,
             payload: data.success
         })
 
     } catch (error) {
         dispatch({
-            type: user.DELETE_USER_FAIL,
+            type: userConstants.DELETE_USER_FAIL,
             payload: error.response.data.message
         })
     }
@@ -162,22 +156,18 @@ export const deleteUser = (id) => async (dispatch) => {
 export const register = (user, role) => async (dispatch) => {
     try {
         dispatch({
-            type: user.REGISTER_USER_REQUEST
+            type: userConstants.REGISTER_USER_REQUEST
         })
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
+    
         const { data } = await axios.post(`/api/v1/user/new`, user, config)
 
         dispatch({
-            type: user.REGISTER_USER_SUCCESS,
+            type: userConstants.REGISTER_USER_SUCCESS,
             payload: data.user
         })
     } catch (error) {
         dispatch({
-            type: user.REGISTER_USER_FAIL,
+            type: userConstants.REGISTER_USER_FAIL,
             payload: error.response.data.message
         })
     }
@@ -187,24 +177,18 @@ export const register = (user, role) => async (dispatch) => {
 export const updatePassword = (passwords) => async (dispatch) => {
     try {
         dispatch({
-            type: user.UPDATE_PASSWORD_REQUEST
+            type: userConstants.UPDATE_PASSWORD_REQUEST
         })
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
 
         const { data } = await axios.put('/api/v1/update/password', passwords, config)
 
         dispatch({
-            type: user.UPDATE_PASSWORD_SUCCESS,
+            type: userConstants.UPDATE_PASSWORD_SUCCESS,
             payload: data.user
         })
     } catch (error) {
         dispatch({
-            type: user.UPDATE_PASSWORD_FAIL,
+            type: userConstants.UPDATE_PASSWORD_FAIL,
             payload: error.response.data.message
         })
     }
@@ -213,25 +197,19 @@ export const updatePassword = (passwords) => async (dispatch) => {
 export const forgotPassword = (email) => async (dispatch) => {
     try {
 
-        dispatch({ type: user.FORGOT_PASSWORD_REQUEST })
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
+        dispatch({ type: userConstants.FORGOT_PASSWORD_REQUEST })
 
         const { data } = await axios.post('/api/v1/password/forgot', { email }, config)
 
         dispatch({
-            type: user.FORGOT_PASSWORD_SUCCESS,
+            type: userConstants.FORGOT_PASSWORD_SUCCESS,
             payload: data.message
         })
 
     }
     catch (error) {
         dispatch({
-            type: user.FORGOT_PASSWORD_FAIL,
+            type: userConstants.FORGOT_PASSWORD_FAIL,
             payload: error.response.data.message
         })
     }
@@ -240,25 +218,19 @@ export const forgotPassword = (email) => async (dispatch) => {
 export const resetPassword = (token, passwords) => async (dispatch) => {
     try {
         dispatch({
-            type: user.NEW_PASSWORD_REQUEST
+            type: userConstants.NEW_PASSWORD_REQUEST
         })
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
 
         const { data } = await axios.put(`/api/v1/password/reset/${token}`, passwords, config)
 
         dispatch({
-            type: user.NEW_PASSWORD_SUCCESS,
+            type: userConstants.NEW_PASSWORD_SUCCESS,
             payload: data.success
         })
 
     } catch (error) {
         dispatch({
-            type: user.NEW_PASSWORD_FAIL,
+            type: userConstants.NEW_PASSWORD_FAIL,
             payload: error.response.data.message
         })
     }
@@ -266,6 +238,6 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 
 export const clearErrors = () => async (dispatch) => {
     dispatch({
-        type: user.CLEAR_ERRORS
+        type: userConstants.CLEAR_ERRORS
     })
 }

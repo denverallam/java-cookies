@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { updatePassword, clearErrors } from '../../../actions/userActions'
-import { UPDATE_PASSWORD_RESET } from '../../../constants/userConstants'
+import { userConstants } from '../../../constants'
 import { useNavigate } from "react-router-dom"
 import Metadata from '../../layout/Metadata'
 
@@ -28,7 +28,7 @@ const UpdatePassword = () => {
             navigate('/profile')
             alert.success('Password updated successfully')
             dispatch({
-                type: UPDATE_PASSWORD_RESET
+                type: userConstants.UPDATE_PASSWORD_RESET
             })
         }
 

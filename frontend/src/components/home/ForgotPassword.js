@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
 import { forgotPassword, clearErrors } from '../../actions/userActions'
-import { FORGOT_PASSWORD_RESET } from '../../constants/userConstants'
+import { userConstants } from '../../constants'
 import Metadata from './../layout/Metadata'
 
 const ForgotPassword = () => {
@@ -16,16 +16,16 @@ const ForgotPassword = () => {
 
     const [email, setEmail] = useState('')
 
-    const goBack = () => {
-        navigate('/login')
-    }
+    const goBack = (path) => {
+        if (path === '/login') {
+            dispatch({
+                type: userConstants.FORGOT_PASSWORD_RESET
+            })
 
-    const goToLogin = () => {
-        dispatch({
-            type: FORGOT_PASSWORD_RESET
-        })
-
-        navigate('/login')
+            navigate(path)
+        } else {
+            navigate(path)
+        }
     }
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const ForgotPassword = () => {
             setEmail('')
             dispatch(clearErrors())
             dispatch({
-                type: FORGOT_PASSWORD_RESET
+                type: userConstants.FORGOT_PASSWORD_RESET
             })
         }
     }, [dispatch, alert, error])
@@ -62,7 +62,7 @@ const ForgotPassword = () => {
                                         </center>
                                         <Card.Text style={{ textAlign: 'center', paddingBottom: '50px' }}>A reset password link has been sent to your email. Kindly check your inbox to proceed.</Card.Text>
                                         <center>
-                                            <Button variant="outline-primary" onClick={goToLogin}>
+                                            <Button variant="outline-primary" onClick={() => goBack('/login')}>
                                                 <span>
                                                     <i class="fa fa-home" style={{ textAlign: 'center' }}></i>
                                                 </span> Go back home
@@ -96,7 +96,7 @@ const ForgotPassword = () => {
                                                 style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                                 disabled={loading ? true : false}
                                                 variant='outline-secondary'
-                                                onClick={goBack}>
+                                                onClick={() => goBack('/')}>
                                                 Back
                                             </Button>
                                             <Button

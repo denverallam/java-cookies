@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, updateUser, clearErrors } from '../../actions/userActions'
-import { UPDATE_USER_RESET } from '../../constants/userConstants'
+import { userConstants } from '../../constants'
 // import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Metadata from '../layout/Metadata'
 // import Loader from '../../layout/Loader'
@@ -40,7 +40,7 @@ const UpdateUser = () => {
         if (isUpdated) {
             alert.success('User has beed updated')
             navigate('/admin/users')
-            dispatch({ type: UPDATE_USER_RESET })
+            dispatch({ type: userConstants.UPDATE_USER_RESET })
         }
 
         if (error) {

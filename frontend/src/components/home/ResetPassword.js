@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Card, Container, Row, InputGroup } from 'react-bootstrap'
 import { resetPassword, clearErrors } from '../../actions/userActions'
-import { NEW_PASSWORD_RESET } from '../../constants/userConstants'
+import { userConstants } from '../../constants'
 import Metadata from './../layout/Metadata'
 
 const ResetPassword = () => {
@@ -29,7 +29,7 @@ const ResetPassword = () => {
             navigate('/login')
             alert.success('Password updated successfully')
             dispatch({
-                type: NEW_PASSWORD_RESET
+                type: userConstants.NEW_PASSWORD_RESET
             })
         }
 
@@ -37,7 +37,7 @@ const ResetPassword = () => {
             alert.error(error)
             dispatch(clearErrors())
             dispatch({
-                type: NEW_PASSWORD_RESET
+                type: userConstants.NEW_PASSWORD_RESET
             })
         }
     }, [dispatch, alert, error, success, navigate])

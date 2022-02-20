@@ -4,7 +4,7 @@ import { useAlert } from 'react-alert'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearErrors, register } from '../../actions/userActions'
-import { REGISTER_USER_RESET } from '../../constants/userConstants'
+import { userConstants } from '../../constants'
 import { useNavigate } from "react-router-dom"
 
 const RegisterUser = () => {
@@ -32,7 +32,7 @@ const RegisterUser = () => {
         if(isCreated) {
             navigate('/')
             alert.success('User successfully created')
-            dispatch({type: REGISTER_USER_RESET})
+            dispatch({type: userConstants.REGISTER_USER_RESET})
         }
     }, [dispatch, error, isCreated, alert, navigate])
     const submitHandler = e => {
