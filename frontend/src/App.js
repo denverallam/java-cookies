@@ -30,7 +30,7 @@ import ListServices from './components/authenticated/services/ListServices'
 import CreateService from './components/authenticated/services/CreateService'
 import UpdateService from './components/authenticated/services/UpdateService'
 
-import ListAudits from './components/authenticated/audits/ListAudits'
+import ListAudits from './components/admin/audits/ListAudits'
 
 import ListCategories from './components/authenticated/categories/ListCategories'
 import CreateCategory from './components/authenticated/categories/CreateCategory'
