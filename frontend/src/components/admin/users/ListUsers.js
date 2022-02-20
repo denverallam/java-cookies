@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { userActions, clearErrors } from '../../actions'
-import { userConstants } from '../../constants'
+import { userActions, clearErrors } from '../../../actions'
+import { userConstants } from '../../../constants'
 
 const ListUsers = () => {
     const dispatch = useDispatch()

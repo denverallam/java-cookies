@@ -51,8 +51,6 @@ const Header = () => {
                                             <NavDropdown.Divider />
                                             <NavDropdown.Item href="/admin/category/new">Create Category</NavDropdown.Item>
                                             <NavDropdown.Item href="/admin/categories">Get All Categories</NavDropdown.Item>
-                                            <NavDropdown.Divider />
-                                            <NavDropdown.Item href="/admin/audits">Get All Audits</NavDropdown.Item>
                                         </NavDropdown>
                                     </>}
                             </> : <>

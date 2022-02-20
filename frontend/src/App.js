@@ -18,9 +18,9 @@ import ResetPassword from './components/home/ResetPassword'
 import Profile from './components/authenticated/user/Profile'
 import UpdatePassword from './components/authenticated/user/UpdatePassword'
 
-import RegisterUser from './components/admin/RegisterUser'
-import ListUsers from './components/admin/ListUsers'
-import UpdateUser from './components/admin/UpdateUser'
+import RegisterUser from './components/admin/users/RegisterUser'
+import ListUsers from './components/admin/users/ListUsers'
+import UpdateUser from './components/admin/users/UpdateUser'
 
 import ListProducts from './components/authenticated/products/ListProducts'
 import CreateProduct from './components/authenticated/products/CreateProduct'
@@ -74,8 +74,6 @@ function App() {
                                 <Route path='/admin/service/new' element={<CreateService />} />
                                 <Route path='/admin/service/:id' element={<UpdateService />} />
 
-                                <Route path='/admin/audits' element={<ListAudits />} />
-
                                 <Route path='/admin/categories' element={<ListCategories />} />
                                 <Route path='/admin/category/new' element={<CreateCategory />} />
                             </Route>
@@ -84,6 +82,8 @@ function App() {
                                 <Route path='/admin/new/user' element={<RegisterUser />} />
                                 <Route path='/admin/users' element={<ListUsers />} />
                                 <Route path='/admin/user/update/:id' element={<UpdateUser />} />
+
+                                <Route path='/admin/audits' element={<ListAudits />} />
                             </Route>
                         </Routes>
                     )}

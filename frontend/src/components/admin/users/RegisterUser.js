@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
-import { useAlert } from 'react-alert'
-import { Link } from 'react-router-dom'
+import { useAlert, } from 'react-alert'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearErrors, userActions } from '../../actions'
-import { userConstants } from '../../constants'
-import { useNavigate } from "react-router-dom"
+import { clearErrors, userActions } from '../../../actions'
+import { userConstants } from '../../../constants'
 
 const RegisterUser = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
     const navigate = useNavigate()
 
-    const { loading, error, isCreated } = useSelector(state => state.user) 
+    const { loading, error, isCreated } = useSelector(state => state.user)
 
     const [staff, setStaff] = useState({
         username: "",
@@ -24,15 +23,15 @@ const RegisterUser = () => {
     const { username, email, password, confirmPassword } = staff
 
     useEffect(() => {
-        if(error) {
+        if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-        if(isCreated) {
+        if (isCreated) {
             navigate('/')
             alert.success('User successfully created')
-            dispatch({type: userConstants.REGISTER_USER_RESET})
+            dispatch({ type: userConstants.REGISTER_USER_RESET })
         }
     }, [dispatch, error, isCreated, alert, navigate])
     const submitHandler = e => {

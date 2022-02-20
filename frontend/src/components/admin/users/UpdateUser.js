@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { userActions, clearErrors } from '../../actions'
-import { userConstants } from '../../constants'
-import Metadata from '../layout/Metadata'
+import { userActions, clearErrors } from '../../../actions'
+import { userConstants } from '../../../constants'
+import Metadata from '../../layout/Metadata'
 
 const UpdateUser = () => {
     const dispatch = useDispatch()
