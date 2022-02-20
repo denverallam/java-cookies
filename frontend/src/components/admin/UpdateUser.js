@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser, updateUser, clearErrors } from '../../actions/userActions'
+import { userActions, clearErrors } from '../../actions'
 import { userConstants } from '../../constants'
-// import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Metadata from '../layout/Metadata'
-// import Loader from '../../layout/Loader'
 
 const UpdateUser = () => {
     const dispatch = useDispatch()
@@ -26,7 +24,7 @@ const UpdateUser = () => {
 
     useEffect(() => {
         if(user && user._id !== id) {
-            dispatch(getUser(id))
+            dispatch(userActions.getUser(id))
         } else if (user) {
             setUserDetails({
                 username: user.username,
@@ -34,7 +32,7 @@ const UpdateUser = () => {
                 role: user.role
             })
         } else {
-        dispatch(getUser(id))
+        dispatch(userActions.getUser(id))
         }
 
         if (isUpdated) {
@@ -60,7 +58,7 @@ const UpdateUser = () => {
     const updateHandler = e => {
         e.preventDefault()
 
-        dispatch(updateUser(id, userDetails))
+        dispatch(userActions.updateUser(id, userDetails))
     }
     
     const onChange = e => {

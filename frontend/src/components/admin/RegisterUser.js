@@ -3,7 +3,7 @@ import { Container, Form, Button } from 'react-bootstrap'
 import { useAlert } from 'react-alert'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearErrors, register } from '../../actions/userActions'
+import { clearErrors, userActions } from '../../actions'
 import { userConstants } from '../../constants'
 import { useNavigate } from "react-router-dom"
 
@@ -38,7 +38,7 @@ const RegisterUser = () => {
     const submitHandler = e => {
         e.preventDefault()
 
-        dispatch(register(staff, 'staff'))
+        dispatch(userActions.register(staff, 'staff'))
     }
 
     const onChange = e => {

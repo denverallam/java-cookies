@@ -3,7 +3,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
-import { forgotPassword, clearErrors } from '../../actions/userActions'
+import { userActions, clearErrors } from '../../actions'
 import { userConstants } from '../../constants'
 import Metadata from './../layout/Metadata'
 
@@ -21,11 +21,8 @@ const ForgotPassword = () => {
             dispatch({
                 type: userConstants.FORGOT_PASSWORD_RESET
             })
-
-            navigate(path)
-        } else {
-            navigate(path)
         }
+        navigate(path)
     }
 
     useEffect(() => {
@@ -33,15 +30,13 @@ const ForgotPassword = () => {
             alert.error(error)
             setEmail('')
             dispatch(clearErrors())
-            dispatch({
-                type: userConstants.FORGOT_PASSWORD_RESET
-            })
+            dispatch({ type: userConstants.FORGOT_PASSWORD_RESET })
         }
     }, [dispatch, alert, error])
 
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(forgotPassword(email))
+        dispatch(userActions.forgotPassword(email))
     }
 
     return (

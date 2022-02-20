@@ -1,4 +1,4 @@
-import { userConstants } from './constants'
+import { CLEAR_ERRORS, userConstants, productConstants, serviceConstants } from './constants'
 
 export const userReducers = {
     authentication: (state = { user: {} }, action) => {
@@ -49,7 +49,7 @@ export const userReducers = {
                     error: action.payload
                 }
     
-            case userConstants.CLEAR_ERRORS:
+            case CLEAR_ERRORS:
                 return {
                     ...state,
                     error: null
@@ -125,7 +125,7 @@ export const userReducers = {
                     isDeleted: false
                 }
     
-            case userConstants.CLEAR_ERRORS:
+            case CLEAR_ERRORS:
                 return {
                     ...state,
                     error: null
@@ -156,7 +156,7 @@ export const userReducers = {
                     error: action.payload
                 }
     
-            case userConstants.CLEAR_ERRORS:
+            case CLEAR_ERRORS:
                 return {
                     ...state,
                     error: null
@@ -187,7 +187,7 @@ export const userReducers = {
                     error: action.payload
                 }
     
-            case userConstants.CLEAR_ERRORS:
+            case CLEAR_ERRORS:
                 return {
                     ...state,
                     error: null
@@ -239,7 +239,7 @@ export const userReducers = {
                     loading: false
                 }
     
-            case userConstants.CLEAR_ERRORS:
+            case CLEAR_ERRORS:
                 return {
                     ...state,
                     error: null

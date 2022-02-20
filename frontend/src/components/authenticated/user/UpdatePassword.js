@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { updatePassword, clearErrors } from '../../../actions/userActions'
+import { userActions, clearErrors } from '../../../actions'
 import { userConstants } from '../../../constants'
 import { useNavigate } from "react-router-dom"
 import Metadata from '../../layout/Metadata'
@@ -42,7 +42,7 @@ const UpdatePassword = () => {
     const submitHandler = e => {
         e.preventDefault()
 
-        dispatch(updatePassword({ oldPassword, password, confirmPassword }))
+        dispatch(userActions.updatePassword({ oldPassword, password, confirmPassword }))
     }
 
     return (

@@ -1,3 +1,5 @@
+export const CLEAR_ERRORS = "CLEAR_ERRORS"
+
 export const userConstants = {
     LOGIN_REQUEST: "LOGIN_REQUEST",
     LOGIN_SUCCESS: "LOGIN_SUCCESS",
@@ -47,9 +49,7 @@ export const userConstants = {
     DELETE_USER_REQUEST: "DELETE_USER_REQUEST",
     DELETE_USER_SUCCESS: "DELETE_USER_SUCCESS",
     DELETE_USER_FAIL: "DELETE_USER_FAIL",
-    DELETE_USER_RESET: "DELETE_USER_RESET",
-
-    CLEAR_ERRORS: "CLEAR_ERRORS"
+    DELETE_USER_RESET: "DELETE_USER_RESET"
 }
 
 export const productConstants = {}

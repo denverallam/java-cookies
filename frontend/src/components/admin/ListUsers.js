@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllUsers, deleteUser, clearErrors } from '../../actions/userActions'
+import { userActions, clearErrors } from '../../actions'
 import { userConstants } from '../../constants'
 
 const ListUsers = () => {
@@ -11,10 +11,10 @@ const ListUsers = () => {
     const navigate = useNavigate()
 
     const { loading, users, error } = useSelector(state => state.users)
-    const { loading: deleteLoading, isDeleted, error: deleteError } = useSelector(state => state.user)
+    const { isDeleted, error: deleteError } = useSelector(state => state.user)
 
     useEffect(() => {
-        dispatch(getAllUsers())
+        dispatch(userActions.getUsers())
 
         if (error) {
             alert.error(error)
@@ -36,7 +36,7 @@ const ListUsers = () => {
     }, [dispatch, deleteError, alert, isDeleted, error])
 
     const deleteHandler = (id) => {
-        dispatch(deleteUser(id))
+        dispatch(userActions.deleteUser(id))
     }
 
     return (

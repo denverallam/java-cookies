@@ -2,7 +2,7 @@ import './App.css';
 import { useEffect, useLayoutEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { loadUser } from './actions/userActions'
+import { userActions } from './actions'
 import store from './store'
 
 import Header from './components/layout/Header'
@@ -43,7 +43,7 @@ function App() {
     // const { dashboard } = useSelector(state => state.dashboard)
 
     useEffect(() => {
-        store.dispatch(loadUser())
+        store.dispatch(userActions.loadUser())
     }, [])
     return (
         <Router>

@@ -3,7 +3,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
-import { logout, clearErrors } from '../../actions/userActions'
+import { userActions, clearErrors } from '../../actions'
 
 const LogoutButton = () => {
     const dispatch = useDispatch()
@@ -11,11 +11,11 @@ const LogoutButton = () => {
     const navigate = useNavigate()
 
     const logoutHandler = () => {
-        dispatch(logout())
+        dispatch(userActions.logout())
         alert.success('Logged out successfully')
         navigate('/')
     }
-    
+
     return (
         <>
             <Button onClick={logoutHandler} variant={"danger"}> Logout </Button>

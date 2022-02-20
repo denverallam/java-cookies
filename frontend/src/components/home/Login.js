@@ -3,7 +3,7 @@ import { useAlert } from 'react-alert'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Form, Button, Card } from 'react-bootstrap'
-import { login, clearErrors } from '../../actions/userActions'
+import { userActions, clearErrors } from '../../actions'
 import { useNavigate } from "react-router-dom"
 
 const Login = () => {
@@ -34,7 +34,7 @@ const Login = () => {
 
     const submitHandler = e => {
         e.preventDefault()
-        dispatch(login(userCredentials))
+        dispatch(userActions.login(userCredentials))
     }
 
     const onChange = e => {
