@@ -45,7 +45,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
     await user.save({ validateBeforeSave: false })
 
-    const link = `${req.protocol}://${process.env.HOST}/password/reset/${resetToken}`
+    const link = `${req.protocol}://${process.env.HOST}/reset/${resetToken}`
 
     try {
         // const message = await resetPassword({ link })

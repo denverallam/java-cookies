@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser, updateUser, clearErrors } from '../../actions/authActions'
-import { UPDATE_USER_RESET } from '../../constants/authConstants'
+import { getUser, updateUser, clearErrors } from '../../actions/userActions'
+import { UPDATE_USER_RESET } from '../../constants/userConstants'
 // import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Metadata from '../layout/Metadata'
 // import Loader from '../../layout/Loader'
@@ -23,8 +23,6 @@ const UpdateUser = () => {
         role: ""
     })
     const { username, email, role } = userDetails
-
-    // const [userDetails, setUserDetails] = useState({})
 
     useEffect(() => {
         if(user && user._id !== id) {

@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllUsers, deleteUser, clearErrors } from '../../actions/authActions'
-import { DELETE_USER_RESET } from '../../constants/authConstants'
+import { getAllUsers, deleteUser, clearErrors } from '../../actions/userActions'
+import { DELETE_USER_RESET } from '../../constants/userConstants'
 
-const AllUsers = () => {
+const ListUsers = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
     const navigate = useNavigate()
@@ -70,9 +70,9 @@ const AllUsers = () => {
                         </tbody>
                     </table>
                 </>
-            ) : <h1>No orders found</h1>}
+            ) : <h1>No users found</h1>}
         </>
     )
 }
 
-export default AllUsers
+export default ListUsers

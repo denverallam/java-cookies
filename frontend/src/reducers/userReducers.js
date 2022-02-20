@@ -1,4 +1,4 @@
-import * as auth from '../constants/authConstants'
+import * as auth from '../constants/userConstants'
 
 export const authReducer = (state = { user: {} }, action) => {
     switch (action.type) {

@@ -3,11 +3,11 @@ import { Container, Form, Button } from 'react-bootstrap'
 import { useAlert } from 'react-alert'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearErrors, register } from '../../actions/authActions'
-import { REGISTER_USER_RESET } from '../../constants/authConstants'
+import { clearErrors, register } from '../../actions/userActions'
+import { REGISTER_USER_RESET } from '../../constants/userConstants'
 import { useNavigate } from "react-router-dom"
 
-const Register = () => {
+const RegisterUser = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
     const navigate = useNavigate()
@@ -77,4 +77,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default RegisterUser

@@ -2,9 +2,9 @@ import React, { Fragment, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearErrors } from '../../actions/authActions'
+import { clearErrors } from '../../../actions/userActions'
 // import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
-import Metadata from '../layout/Metadata'
+import Metadata from '../../layout/Metadata'
 // import Loader from '../../layout/Loader'
 
 const Profile = () => {
@@ -31,7 +31,7 @@ const Profile = () => {
                     <p>Username: {user.username}</p>
                     <p>Email: {user.email}</p>
                     <p>Role: {user.role}</p>
-                    <Link to='/update/password'>Change password</Link>
+                    <Link to='/password/update'>Change password</Link>
                 </>}
         </>
     )

@@ -3,8 +3,8 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
-import { forgotPassword, clearErrors } from './../../actions/authActions'
-import { FORGOT_PASSWORD_RESET } from './../../constants/authConstants'
+import { forgotPassword, clearErrors } from '../../actions/userActions'
+import { FORGOT_PASSWORD_RESET } from '../../constants/userConstants'
 import Metadata from './../layout/Metadata'
 
 const ForgotPassword = () => {

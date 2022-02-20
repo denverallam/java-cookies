@@ -3,9 +3,9 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
-import { logout, clearErrors } from '../../actions/authActions'
+import { logout, clearErrors } from '../../actions/userActions'
 
-const Home = () => {
+const LogoutButton = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
     const navigate = useNavigate()
@@ -23,4 +23,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default LogoutButton
