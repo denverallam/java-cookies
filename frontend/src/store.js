@@ -7,7 +7,6 @@ import * as user from './reducers/userReducers'
 const reducer = combineReducers({
     auth: user.authReducer,
     user: user.userReducer,
-    customer: user.verifyCustomerReducer,
     users: user.usersReducer,
     userDetails: user.userDetailsReducer,
     forgotPassword: user.forgotPasswordReducer,

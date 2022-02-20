@@ -75,7 +75,6 @@ function App() {
                                 <Route path='/admin/users' element={<ListUsers />} />
                                 <Route path='/admin/user/update/:id' element={<UpdateUser />} />
                             </Route>
-
                         </Routes>
                     )}
                     {/* <Footer /> */}
