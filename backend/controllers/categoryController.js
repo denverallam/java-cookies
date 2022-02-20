@@ -8,24 +8,12 @@ exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        categoryCount,
         categories
     })
 })
 
-exports.getSingleCategory = catchAsyncErrors(async (req, res, next) => {
-    const category = await Category.findById(req.params.id)
-
-    if (!category) { return next(new ErrorHandler('Category not found', 404)) }
-
-    res.status(200).json({
-        success: true,
-        category
-    })
-})
-
 exports.createCategory = catchAsyncErrors(async (req, res, next) => {
-    const category = await Category.create({...req.body, created_by: req.user.username})
+    const category = await Category.create({name: req.body.name, created_by: req.user.username})
 
     await Audit.create({
         name: "New category created",
@@ -37,30 +25,6 @@ exports.createCategory = catchAsyncErrors(async (req, res, next) => {
     res.status(201).json({
         success: true,
         message: "New category added!",
-        category
-    })
-})
-
-exports.updateCategory = catchAsyncErrors(async (req, res, next) => {
-    let category = await Category.findById(req.params.id)
-
-    if (!category) { return next(new ErrorHandler('Category not found', 404)) }
-
-    category = await Category.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    });
-
-    await Audit.create({
-        name: "Category updated",
-        description: `${category.name} updated.`,
-        created_by: req.user.username,
-        date: Date.now()
-    })
-
-    res.status(200).json({
-        success: true, 
         category
     })
 })

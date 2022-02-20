@@ -34,6 +34,11 @@ const Header = () => {
                                             <NavDropdown.Divider />
                                             <NavDropdown.Item href="/admin/service/new">Create Service</NavDropdown.Item>
                                             <NavDropdown.Item href="/admin/services">Get All Services</NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item href="/admin/category/new">Create Category</NavDropdown.Item>
+                                            <NavDropdown.Item href="/admin/categories">Get All Categories</NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item href="/admin/audits">Get All Audits</NavDropdown.Item>
                                         </NavDropdown>
                                     </> :
                                     <>
@@ -43,6 +48,11 @@ const Header = () => {
                                             <NavDropdown.Divider />
                                             <NavDropdown.Item href="/admin/service/new">Create Service</NavDropdown.Item>
                                             <NavDropdown.Item href="/admin/services">Get All Services</NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item href="/admin/category/new">Create Category</NavDropdown.Item>
+                                            <NavDropdown.Item href="/admin/categories">Get All Categories</NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item href="/admin/audits">Get All Audits</NavDropdown.Item>
                                         </NavDropdown>
                                     </>}
                             </> : <>

@@ -30,6 +30,11 @@ import ListServices from './components/authenticated/services/ListServices'
 import CreateService from './components/authenticated/services/CreateService'
 import UpdateService from './components/authenticated/services/UpdateService'
 
+import ListAudits from './components/authenticated/audits/ListAudits'
+
+import ListCategories from './components/authenticated/categories/ListCategories'
+import CreateCategory from './components/authenticated/categories/CreateCategory'
+
 const ScrollToTop = ({ children }) => {
     const location = useLocation();
     useLayoutEffect(() => {
@@ -68,6 +73,11 @@ function App() {
                                 <Route path='/admin/services' element={<ListServices />} />
                                 <Route path='/admin/service/new' element={<CreateService />} />
                                 <Route path='/admin/service/:id' element={<UpdateService />} />
+
+                                <Route path='/admin/audits' element={<ListAudits />} />
+
+                                <Route path='/admin/categories' element={<ListCategories />} />
+                                <Route path='/admin/category/new' element={<CreateCategory />} />
                             </Route>
 
                             <Route element={<ProtectedRoute />}>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { CLEAR_ERRORS, userConstants } from './constants'
+import { CLEAR_ERRORS, categoryConstants, auditConstants, userConstants } from './constants'
 
 const config = {
     appJSON: {
@@ -21,7 +21,6 @@ export const clearErrors = () => async (dispatch) => {
 }
 
 export const userActions = {
-
     login: (user) => async (dispatch) => {
         try {
             dispatch({
@@ -168,7 +167,7 @@ export const userActions = {
         }
     },
 
-    register: (user, role) => async (dispatch) => {
+    register: (user) => async (dispatch) => {
         try {
             dispatch({
                 type: userConstants.REGISTER_USER_REQUEST
@@ -186,7 +185,6 @@ export const userActions = {
                 payload: error.response.data.message
             })
         }
-
     },
 
     updatePassword: (passwords) => async (dispatch) => {
@@ -247,6 +245,95 @@ export const userActions = {
             dispatch({
                 type: userConstants.NEW_PASSWORD_FAIL,
                 payload: error.response.data.message
+            })
+        }
+    }
+}
+
+export const auditActions = {
+    getAudits: () => async (dispatch) => {
+        try {
+            dispatch({
+                type: auditConstants.ALL_AUDITS_REQUEST
+            })
+
+            const { data } = await axios.get('/api/v1/admin/audits')
+
+            dispatch({
+                type: auditConstants.ALL_AUDITS_SUCCESS,
+                payload: data
+            })
+
+        } catch (error) {
+            dispatch({
+                type: auditConstants.ALL_AUDITS_FAIL,
+                payload: error.response.data.message
+            })
+        }
+    }
+}
+
+export const categoryActions = {
+    getCategories: () => async (dispatch) => {
+        try {
+            dispatch({
+                type: categoryConstants.GET_CATEGORIES_REQUEST
+            })
+
+            const { data } = await axios.get('/api/v1/categories')
+
+            dispatch({
+                type: categoryConstants.GET_CATEGORIES_SUCCESS,
+                payload: data
+            })
+
+        } catch (error) {
+            dispatch({
+                type: categoryConstants.GET_CATEGORIES_FAIL,
+                payload: error.response.data.message
+            })
+        }
+    },
+
+    createCategory: (category) => async (dispatch) => {
+        try {
+            dispatch({
+                type: categoryConstants.NEW_CATEGORY_REQUEST
+            })
+
+            const { data } = await axios.post(`/api/v1/admin/new/category`, category, config.appJSON)
+
+            dispatch({
+                type: categoryConstants.NEW_CATEGORY_SUCCESS,
+                payload: data.category
+            })
+        } catch (error) {
+            dispatch({
+                type: categoryConstants.NEW_CATEGORY_FAIL,
+                payload: error.response.data.message
+            })
+        }
+    },
+
+    deleteCategory: (id) => async (dispatch) => {
+        try {
+            console.log(id)
+            dispatch({
+                type: categoryConstants.DELETE_CATEGORY_REQUEST
+            })
+
+            const { data } = await axios.delete(`/api/v1/admin/category/${id}`)
+
+            console.log(data)
+            dispatch({
+                type: categoryConstants.DELETE_CATEGORY_SUCCESS,
+                payload: data.success
+            })
+
+        } catch (error) {
+            dispatch({
+                type: categoryConstants.DELETE_CATEGORY_FAIL,
+                payload: error.response.data?.message
             })
         }
     }

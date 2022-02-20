@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools} from 'redux-devtools-extension'
 
-import { userReducers, productReducers, serviceReducers } from './reducers'
+import { userReducers, auditReducers, categoryReducers, productReducers, serviceReducers } from './reducers'
 
 const reducer = combineReducers({
     auth: userReducers.authentication,
@@ -10,6 +10,11 @@ const reducer = combineReducers({
     users: userReducers.users,
     userDetails: userReducers.singleUser,
     forgotPassword: userReducers.passwordReset,
+
+    audits: auditReducers.audits,
+
+    categories: categoryReducers.categories,
+    category: categoryReducers.manageCategories,
 })
 
 let initialState = {}
