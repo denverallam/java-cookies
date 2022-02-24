@@ -3,6 +3,7 @@ const Audit = require('../models/audit')
 const ErrorHandler = require('../utils/errorHandler')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const APIFeatures = require('../utils/apiFeatures')
+const cloudinary = require('cloudinary').v2
 
 exports.getAllServices = catchAsyncErrors(async (req, res, next) => {
     const resPerPage = 5
@@ -34,8 +35,11 @@ exports.getSingleService = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.createService = catchAsyncErrors(async (req, res, next) => {
+    const images = req.files
+
     const service = await Service.create({
         ...req.body, 
+        images,
         created_at: new Date(Date.now()),
         updated_at: new Date(Date.now()),
         created_by: req.user.username,
@@ -61,8 +65,30 @@ exports.updateService = catchAsyncErrors(async (req, res, next) => {
 
     if (!service) { return next(new ErrorHandler('service not found', 404)) }
 
+    let newImages = req.files
+
+    const oldImages = service.images
+    const length = oldImages && oldImages.length
+    let ids = []
+
+    for (let i = 0; i < length; i++) {
+        ids.push(oldImages[i].filename)
+    }
+
+    if (newImages == null || newImages == '') {
+        newImages = service.images
+    } else {
+        if (ids.length != 0) {
+            for (let x = 0; x < ids.length; x++) {
+                cloudinary.uploader.destroy(ids[x],
+                    { resource_type: 'raw' })
+            }
+        }
+    }
+    
     service = await Service.findByIdAndUpdate(req.params.id, {
         ...req.body,
+        images: newImages,
         updated_at: new Date(Date.now()),
         updated_by: req.user.username
     }, {
@@ -88,6 +114,21 @@ exports.deleteService = catchAsyncErrors(async (req, res, next) => {
     const service = await Service.findById(req.params.id)
 
     if (!service) { return next(new ErrorHandler('Service not found', 404)) }
+
+    const images = service.images
+    const length = images.length
+    let ids = []
+
+    for (let i = 0; i < length; i++) {
+        ids.push(images[i].filename)
+    }
+
+    if (ids.length != 0) {
+        for (let x = 0; x < ids.length; x++) {
+            cloudinary.uploader.destroy(ids[x],
+                { resource_type: 'raw' })
+        }
+    }
 
     await Audit.create({
         name: "Service deleted",
